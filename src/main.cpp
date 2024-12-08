@@ -8,7 +8,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 unsigned long previousMillis = 0;
-const unsigned long interval = 5 * 1000;// 10 * 60 * 1000; // 주기 : 10분에 한번씩
+const unsigned long interval =  10 * 60 * 1000; // 주기 : 10분에 한번씩
 
 #define DHT_PIN 15     // 온습도 센서가 연결된 핀 번호
 #define DHT_TYPE DHT11 // 온습도 센서 타입
@@ -53,7 +53,7 @@ void loop()
     float soilMoisturePercent = map(analogRead(FC28_PIN), 4095, 0, 0, 100);
 
     // JSON 메시지 생성 (크기 최적화) - broker 서버 현재는 256 바이트로 용량 제한이 있어 json 작성시 주의!
-    String jsonTotal = "{\"at\":\"" + datetime + "\",\"data\":["
+    String jsonTotal = "{\"uid\":\"" + get_wifi_mac_address() + "\",\"at\":\"" + datetime + "\",\"data\":["
                        "{\"type\":\"humidity\",\"value\":" + String(humidityPercent) + ",\"unit\":\"%\"},"
                        "{\"type\":\"temperature\",\"value\":" + String(temperatureCelsius) + ",\"unit\":\"C\"},"
                        "{\"type\":\"soil-moisture\",\"value\":" + String(soilMoisturePercent) + ",\"unit\":\"%\"}"

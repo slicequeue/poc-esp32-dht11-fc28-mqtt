@@ -21,6 +21,11 @@ String get_current_datetime_iso8601()
   return String(timeStr);
 }
 
+String get_wifi_mac_address() {
+  return WiFi.macAddress();
+}
+
+
 void setup_wifi(const char* ssid, const char* password) {
 
   delay(10);
@@ -41,9 +46,12 @@ void setup_wifi(const char* ssid, const char* password) {
 
   Serial.println("");
   Serial.println("WiFi connected");
-  Serial.println("IP address: ");
+  Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+  Serial.print("mac: ");
+  Serial.println(WiFi.macAddress());
 
   configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
+  Serial.print("time: ");
   Serial.println(get_current_datetime_iso8601());
 }
